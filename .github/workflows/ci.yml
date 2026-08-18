@@ -35,11 +35,32 @@ jobs:
             console.log("manifest ok:", m.id, m.version);
           '
 
+      # A syntax check only. qmllint is no use here: it cannot resolve the
+      # Quickshell `qs.*` imports and passes files with real errors in them, so
+      # it would be a false green. qmlformat at least fails on a parse error.
       - name: QML parses
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq qt6-declarative-dev-tools >/dev/null
+          sudo apt-get install -y -qq qt6-declarative-dev-tools
+
+          # Debian and Ubuntu keep Qt 6 tools off PATH, under /usr/lib/qt6/bin.
+          qmlformat=$(command -v qmlformat || true)
+          if [ -z "$qmlformat" ]; then
+            qmlformat=$(find /usr/lib/qt6 /usr/lib/*/qt6 -name qmlformat -type f 2>/dev/null | head -1)
+          fi
+          if [ -z "$qmlformat" ]; then
+            echo "::error::qmlformat not found — the QML syntax check would silently pass"
+            exit 1
+          fi
+          echo "using $qmlformat"
+
+          status=0
           for f in *.qml; do
-            echo "  $f"
-            qmlformat6 "$f" > /dev/null 2>&1 || qmlformat "$f" > /dev/null
+            if "$qmlformat" "$f" > /dev/null; then
+              echo "  ok   $f"
+            else
+              echo "::error file=$f::$f failed to parse"
+              status=1
+            fi
           done
+          exit $status
