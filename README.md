@@ -7,18 +7,9 @@ It replaces the built-in clock rather than sitting next to it, so you get one
 clock in the bar and one calendar popup — not a second date widget competing for
 space.
 
-```
-GREGORIAN                          NEPALI
-    📅 August 18                       📅 भदौ २
-  Tuesday · 2 Bhadau 2083          मङ्गलबार · 18 Aug 2026
- 2026 ▬▬▬▬▬▬▬▬▬▬░░░░░ 63%        २०८३ ▬▬▬▬▬▬░░░░░░░░░ ३५%
-  W  SUN MON TUE WED THU FRI SAT    W  आइत सोम मङ्गल बुध बिही शुक्र शनि
- 31   26  27  28  29  30  31   1   १८   ३१   १   २   ३   ४   ५   ६
- 32    2   3   4   5   6   7   8   १९    ७   ८   ९  १०  ११  १२  १३
-        …                                    …
-        AUGUST 2026                        भदौ २०८३
-     SAUN / BHADAU 2083                 AUG / SEP 2026
-```
+| Gregorian | Nepali |
+|:---:|:---:|
+| ![The calendar popup in its Gregorian view: August 18 over a month grid, with the Bikram Sambat date named underneath](docs/screenshot-gregorian.png) | ![The same popup in its Nepali view: भदौ २ over a Devanagari month grid, with the Gregorian date named underneath](docs/screenshot-nepali.png) |
 
 Both views are laid out to **exactly the same width and height**, so switching
 never resizes or reflows the popup. Each one sets its own date large and names
