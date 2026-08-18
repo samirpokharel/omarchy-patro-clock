@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "id": "samirpokharel.patro-clock",
+  "name": "Patro Clock",
+  "version": "0.1.0",
+  "author": "samir pokhrel",
+  "license": "MIT",
+  "description": "Omarchy's clock with a Bikram Sambat calendar beside the Gregorian one. Swipe sideways in the popup to cross between them.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Patro Clock",
+    "description": "A drop-in replacement for the built-in clock. The calendar popup draws the same month in either Bikram Sambat or Gregorian, laid out to identical size, and a two-finger horizontal swipe crosses between them.",
+    "category": "Time",
+    "aliases": [
+      "clock",
+      "calendar",
+      "patro",
+      "nepali",
+      "bikram",
+      "sambat",
+      "nepal",
+      "date"
+    ],
+    "allowMultiple": false,
+    "defaultSection": "center",
+    "defaults": {
+      "calendarSystem": "bikram",
+      "format": "dddd HH:mm",
+      "formatAlt": "d MMMM 'W'ww yyyy",
+      "verticalFormat": "HH\n—\nmm",
+      "swipeThreshold": 120
+    },
+    "schema": [
+      {
+        "key": "calendarSystem",
+        "type": "enum",
+        "label": "Calendar",
+        "options": [
+          "bikram",
+          "gregorian"
+        ],
+        "defaultValue": "bikram",
+        "description": "Which calendar the popup opens on. Swiping sideways in the popup changes it and writes the choice back here."
+      },
+      {
+        "key": "format",
+        "type": "string",
+        "label": "Bar format",
+        "defaultValue": "dddd HH:mm",
+        "description": "Qt date format for the bar label. 'ww' is substituted with the ISO week number. Right-clicking the label walks the common formats."
+      },
+      {
+        "key": "formatAlt",
+        "type": "string",
+        "label": "Alternate bar format",
+        "defaultValue": "d MMMM 'W'ww yyyy",
+        "description": "The second format in the right-click ring."
+      },
+      {
+        "key": "verticalFormat",
+        "type": "string",
+        "label": "Vertical bar format",
+        "defaultValue": "HH\n—\nmm",
+        "description": "Used when the bar is vertical. Newlines stack the label."
+      },
+      {
+        "key": "weekStartDay",
+        "type": "enum",
+        "label": "Week starts on",
+        "options": [
+          "sunday",
+          "monday"
+        ],
+        "description": "Gregorian view only — the Nepali view always starts on Sunday. Leave unset to follow the system locale. Clicking the grid's 'W' heading also toggles it."
+      },
+      {
+        "key": "swipeThreshold",
+        "type": "number",
+        "label": "Swipe sensitivity",
+        "defaultValue": 120,
+        "description": "How much sideways scroll counts as one swipe, in wheel-angle units. Around 120 is one notch. Raise it if the calendar flips too eagerly, lower it if a full swipe does nothing."
+      },
+      {
+        "key": "birthYear",
+        "type": "number",
+        "label": "Birth year",
+        "defaultValue": 0,
+        "description": "Set this and a second progress bar tracks a life against the expectancy below. 0 hides it. Double-tapping the year bar in the popup does the same thing."
+      },
+      {
+        "key": "lifeExpectancy",
+        "type": "number",
+        "label": "Life expectancy",
+        "defaultValue": 90,
+        "description": "Years, used only when a birth year is set."
+      }
+    ]
+  }
+}

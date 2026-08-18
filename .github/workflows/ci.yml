@@ -1,0 +1,45 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # No dependencies: the calendar modules are deliberately Qt-free so they
+      # can be exercised under plain node.
+      - name: Calendar arithmetic
+        run: node tests/bikram.test.js
+
+      - name: Manifest is valid JSON and declares what the shell needs
+        run: |
+          node -e '
+            const m = require("./manifest.json");
+            const need = ["schemaVersion", "id", "name", "version", "kinds", "entryPoints"];
+            const missing = need.filter(k => !(k in m));
+            if (missing.length) throw new Error("manifest missing: " + missing.join(", "));
+            if (!m.entryPoints.barWidget) throw new Error("no barWidget entry point");
+            const fs = require("fs");
+            for (const f of Object.values(m.entryPoints)) {
+              if (!fs.existsSync(f)) throw new Error("entry point not found: " + f);
+            }
+            console.log("manifest ok:", m.id, m.version);
+          '
+
+      - name: QML parses
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq qt6-declarative-dev-tools >/dev/null
+          for f in *.qml; do
+            echo "  $f"
+            qmlformat6 "$f" > /dev/null 2>&1 || qmlformat "$f" > /dev/null
+          done

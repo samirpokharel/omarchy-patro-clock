@@ -1,0 +1,10 @@
+{
+  "name": "omarchy-patro-clock",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Tests for the Bikram Sambat calendar math in the Patro Clock Omarchy plugin",
+  "scripts": {
+    "test": "node tests/bikram.test.js"
+  },
+  "license": "MIT"
+}
