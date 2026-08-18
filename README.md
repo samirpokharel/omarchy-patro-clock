@@ -41,6 +41,23 @@ Devanagari comes from `noto-fonts`, which Omarchy already installs. JetBrains
 Mono has no Devanagari coverage, so the Nepali view asks for
 `Noto Sans Devanagari` by name.
 
+## Removing it
+
+```bash
+omarchy plugin remove samirpokharel.patro-clock
+omarchy plugin enable omarchy.clock
+```
+
+If you repointed the bar's center anchor during install, point it back:
+
+```bash
+jq '.bar.centerAnchor = "omarchy.clock"' ~/.config/omarchy/shell.json > /tmp/s \
+  && mv /tmp/s ~/.config/omarchy/shell.json
+```
+
+The plugin writes only its own entry in `~/.config/omarchy/shell.json`, and only
+when you change one of its settings, so removing it leaves nothing else behind.
+
 ## Using it
 
 | | |
